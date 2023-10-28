@@ -23,7 +23,7 @@ class OcrPreProcessor:
         file = self.google_drive.CreateFile({'id': file_id})
         file.GetContentFile(tmp_file_path)  # Download file as 'example.xlsx'.
         file.Delete()
-        archived_file = self.google_drive.CreateFile({'parent': [{'parent': archived_file_id}]})
+        archived_file = self.google_drive.CreateFile({'parent': [{'id': archived_file_id}]})
         archived_file.SetContentFile(tmp_file_path)
         archived_file.Upload()
         ocr_df = pd.read_excel(tmp_file_path)
@@ -39,7 +39,7 @@ class OcrPreProcessor:
             for title, new_file in new_added_files.items():
                 print(new_file)
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
-                ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'], new_file['parents'][0].get("id"))
+                ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'], '1MpRnelL2E8Fmxh3Kctp9sfc8p608u2-p')
 
 
 
