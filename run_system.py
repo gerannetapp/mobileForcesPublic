@@ -18,16 +18,22 @@ def import_configuration_data():
     return config_data
 
 
-def main():
+def generate_google_drive_connection():
     gauth = GoogleAuth()
     gauth.CommandLineAuth()
     drive = GoogleDrive(gauth)
+    return drive
 
+
+def main():
+    drive = generate_google_drive_connection()
     config_data = import_configuration_data()
+
     if OCR_FOLDER_ID not in config_data or config_data[OCR_FOLDER_ID] is None:
-        print("no ocr folder id found, please add to configuration file")
-        
+        print("no OCR folder ID found, please add to configuration file")
+
     ocr_pre_process = OcrPreProcessor(drive, config_data[OCR_FOLDER_ID])
+
     while True:
         ocr_pre_process.preprocess_new_file()
         time.sleep(1)
