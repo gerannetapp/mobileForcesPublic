@@ -36,7 +36,7 @@ class OcrPreProcessor:
                 print(new_file)
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'])
-                previous_parents = ",".join(new_file['parents'])
+                previous_parents = ",".join(new_file['parents'][0].get("id"))
                 file = self.google_drive.files().update(
                     fileId=new_file['id'],
                     addParents="1MpRnelL2E8Fmxh3Kctp9sfc8p608u2-p",
