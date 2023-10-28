@@ -35,7 +35,7 @@ def main():
         ocr_pre_process = OcrPreProcessor(drive, config_data[OCR_FOLDER_ID])
 
         while True:
-            ocr_pre_process.preprocess_new_file()
+            ocr_pre_process.preprocess_new_files()
             time.sleep(1)
 
 

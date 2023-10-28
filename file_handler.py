@@ -25,5 +25,4 @@ class FileHandler:
         pass
 
     def filter_files_by_extension(self, files: Dict[str, Dict]):
-        filter_files = {key: files[key] for key, value in files.items() if key.endswith(self.file_extensions)}
-        return filter_files
+        return {key: files[key] for key, value in files.items() if key.endswith(self.file_extensions)}

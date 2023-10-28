@@ -22,7 +22,7 @@ class OcrPreProcessor:
         ocr_df = pd.read_excel(tmp_file_path)
         return ocr_df
 
-    def preprocess_new_file(self):
+    def preprocess_new_files(self):
         existing_file_titles = set(self.existing_files.keys())
         new_added_files = self.excel_file_handler.get_new_files_from_folder(self.OCR_FOLDER_ID, existing_file_titles)
         if new_added_files:
