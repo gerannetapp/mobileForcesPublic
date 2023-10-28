@@ -1,5 +1,6 @@
 from typing import Set, List, Dict
 
+
 class FileHandler:
     def __init__(self, google_drive, file_extensions: tuple):
         self.file_extensions = file_extensions
@@ -20,9 +21,34 @@ class FileHandler:
         new_added_titles = fetched_titles.difference(existing_file_titles)
         return new_added_titles
 
+    def filter_files_by_extension(self, files: Dict[str, Dict]):
+        return {key: files[key] for key, value in files.items() if key.endswith(self.file_extensions)}
+
+    def move_file(self, folder_path, file_name: str, file_id: str, remote_folder_id):
+        local_file_path = f"{folder_path}{file_name}"
+        file = self.get_file_object(file_id)
+        self.download_file(file, local_file_path)
+        self.upload_file_into_folder(local_file_path, remote_folder_id)
+        self.delete_file(file)
+        return local_file_path
+
+    def get_file_object(self, file_id: str):
+        file = self.google_drive.CreateFile({'id': file_id})
+        return file
+
+    def upload_file_into_folder(self, file_path: str, remote_folder_id: str):
+        archived_file = self.google_drive.CreateFile({'parents': [{'id': remote_folder_id}]})
+        archived_file.SetContentFile(file_path)
+        archived_file.Upload()
+
+    @staticmethod
+    def download_file(file, file_path: str):
+        file.GetContentFile(file_path)  # Download file as 'example.xlsx'.
+
+    @staticmethod
+    def delete_file(file):
+        file.Delete()
+
     def initialize_folder_structure(self):
         # TODO: create tmp dir for preprocess dir and categorized dirs
         pass
-
-    def filter_files_by_extension(self, files: Dict[str, Dict]):
-        return {key: files[key] for key, value in files.items() if key.endswith(self.file_extensions)}
