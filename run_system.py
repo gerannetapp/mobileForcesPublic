@@ -2,7 +2,6 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from google import CreateService
 import time
 import json
 import logging
@@ -30,11 +29,10 @@ def generate_google_drive_connection():
 def generate_google_drive_service():
     scope = ['https://www.googleapis.com/auth/drive']
     service_account_json_key = '/home/ubuntu/mobileForcesPublic/client_secrets.json'
-    API_Version = 'v3'
-    API_NAMR = 'drive'
-
-    service = CreateService(service_account_json_key, API_NAMR, API_Version, scope)
-    return service
+    credentials = service_account.Credentials.from_service_account_file(
+                              filename=service_account_json_key,
+                              scopes=scope)
+    service = build('drive', 'v3', credentials=credentials)
 
 
 
