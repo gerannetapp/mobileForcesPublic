@@ -2,7 +2,7 @@ from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
 from google.oauth2 import service_account
 from googleapiclient.discovery import build
-from Google import CreateService
+from google import CreateService
 import time
 import json
 import logging
