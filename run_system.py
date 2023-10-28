@@ -1,5 +1,7 @@
 from pydrive.auth import GoogleAuth
 from pydrive.drive import GoogleDrive
+from google.oauth2 import service_account
+from googleapiclient.discovery import build
 import time
 import json
 import logging
@@ -24,15 +26,25 @@ def generate_google_drive_connection():
     drive = GoogleDrive(gauth)
     return drive
 
+def generate_google_drive_service():
+    scope = ['https://www.googleapis.com/auth/drive']
+    service_account_json_key = '/home/ubuntu/mobileForcesPublic/client_secrets.json'
+    credentials = service_account.Credentials.from_service_account_file(
+                              filename=service_account_json_key,
+                              scopes=scope)
+    service = build('drive', 'v3', credentials=credentials)
+
+
 
 def main():
     drive = generate_google_drive_connection()
+    service = generate_google_drive_service()
     config_data = import_configuration_data()
 
     if OCR_FOLDER_ID not in config_data or config_data[OCR_FOLDER_ID] is None:
         print("no OCR folder ID found, please add to configuration file")
     else:
-        ocr_pre_process = OcrPreProcessor(drive, config_data[OCR_FOLDER_ID])
+        ocr_pre_process = OcrPreProcessor(service, drive, config_data[OCR_FOLDER_ID])
 
         while True:
             ocr_pre_process.preprocess_new_files()
