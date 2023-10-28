@@ -22,7 +22,7 @@ class OcrPreProcessor:
         tmp_file_path = f"{folder_path}{file_name}"
         file = self.google_drive.CreateFile({'id': file_id})
         file.GetContentFile(tmp_file_path)  # Download file as 'example.xlsx'.
-        file.delete()
+        file.Delete()
         archived_file = self.google_drive.CreateFile({'parent': [{'parent': archived_file_id}]})
         archived_file.SetContentFile(tmp_file_path)
         archived_file.Upload()
