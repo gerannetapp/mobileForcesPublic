@@ -41,7 +41,6 @@ class OcrPreProcessor:
         new_added_files = self.excel_file_handler.get_new_files_from_folder(self.OCR_FOLDER_ID, existing_file_titles)
         if new_added_files:
             for title, new_file in new_added_files.items():
-                print(new_file)
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'])
 
