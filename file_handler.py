@@ -7,7 +7,6 @@ class FileHandler:
         self.google_drive = google_drive
 
     def get_new_files_from_folder(self, folder_id: str, existing_file_titles: Set[str]) -> dict:
-        print(f"folder_id: {folder_id}")
         ocr_file_list = self.google_drive.ListFile({"q": f"'{folder_id}' in parents and trashed=false"}).GetList()
         fetched_file = {file['title']: dict(file) for file in ocr_file_list}
 
