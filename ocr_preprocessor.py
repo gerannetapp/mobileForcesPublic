@@ -39,11 +39,11 @@ class OcrPreProcessor:
             for title, new_file in new_added_files.items():
                 print(new_file)
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
+
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'], '1MpRnelL2E8Fmxh3Kctp9sfc8p608u2-p')
-
-
-
+                # TODO: delete from ocr and upload to archived
                 preprocess_df = self.preprocess_file(ocr_df)
+
                 # TODO: upload preprocess_df as xls to the relavant folder
                 print(preprocess_df)
             if new_added_files:
