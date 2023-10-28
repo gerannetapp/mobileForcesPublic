@@ -1,4 +1,6 @@
 import logging
+import os
+
 import pandas as pd
 
 from file_handler import FileHandler
@@ -7,6 +9,7 @@ from file_handler import FileHandler
 class OcrPreProcessor:
     VALID_FILE_EXTENSIONS = ('.xlsx',)
     OCR_FOLDER_PATH = "/home/ubuntu/mobileForcesPublic/ocr/"
+    ARCHIVE_FOLDER_PATH = "/home/ubuntu/mobileForcesPublic/archive/ocr_archive"
     OCR_FOLDER_ID = None
 
     def __init__(self, google_drive, ocr_folder_id: str):
@@ -32,6 +35,7 @@ class OcrPreProcessor:
             for title, new_file in new_added_files.items():
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'])
+                os.rename(self.OCR_FOLDER_PATH + title, self.ARCHIVE_FOLDER_PATH + title)
                 preprocess_df = self.preprocess_file(ocr_df)
                 # TODO: upload preprocess_df as xls to the relavant folder
                 print(preprocess_df)
