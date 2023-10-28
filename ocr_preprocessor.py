@@ -23,7 +23,7 @@ class OcrPreProcessor:
         file = self.google_drive.CreateFile({'id': file_id})
         file.GetContentFile(tmp_file_path)  # Download file as 'example.xlsx'.
         file.Delete()
-        archived_file = self.google_drive.CreateFile({'parent': [{'id': archived_file_id}]})
+        archived_file = self.google_drive.CreateFile({'parents': [{'id': archived_file_id}]})
         archived_file.SetContentFile(tmp_file_path)
         archived_file.Upload()
         ocr_df = pd.read_excel(tmp_file_path)
