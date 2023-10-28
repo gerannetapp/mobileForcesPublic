@@ -1,4 +1,5 @@
 from typing import Set, List, Dict
+from pathlib import Path
 
 
 class FileHandler:
@@ -38,7 +39,8 @@ class FileHandler:
 
     def upload_file_into_folder(self, file_path: str, remote_folder_id: str):
         archived_file = self.google_drive.CreateFile({'parents': [{'id': remote_folder_id}]})
-        archived_file.SetContentFile(file_path)
+        file_name = Path(file_path).name
+        archived_file.SetContentFile(file_name)
         archived_file.Upload()
 
     @staticmethod
