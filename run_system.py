@@ -31,12 +31,12 @@ def main():
 
     if OCR_FOLDER_ID not in config_data or config_data[OCR_FOLDER_ID] is None:
         print("no OCR folder ID found, please add to configuration file")
+    else:
+        ocr_pre_process = OcrPreProcessor(drive, config_data[OCR_FOLDER_ID])
 
-    ocr_pre_process = OcrPreProcessor(drive, config_data[OCR_FOLDER_ID])
-
-    while True:
-        ocr_pre_process.preprocess_new_file()
-        time.sleep(1)
+        while True:
+            ocr_pre_process.preprocess_new_file()
+            time.sleep(1)
 
 
 if __name__ == '__main__':
