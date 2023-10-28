@@ -22,6 +22,9 @@ class OcrPreProcessor:
         ocr_df = pd.read_excel(tmp_file_path)
         return ocr_df
 
+    def preprocess_file(self, ocr_df):
+        return ocr_df
+
     def preprocess_new_files(self):
         existing_file_titles = set(self.existing_files.keys())
         new_added_files = self.excel_file_handler.get_new_files_from_folder(self.OCR_FOLDER_ID, existing_file_titles)
@@ -29,6 +32,8 @@ class OcrPreProcessor:
             for title, new_file in new_added_files.items():
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'])
-                print(ocr_df)
+                preprocess_df = self.preprocess_file(ocr_df)
+                # TODO: upload preprocess_df as xls to the relavant folder
+                print(preprocess_df)
             if new_added_files:
                 self.existing_files.update(new_added_files)
