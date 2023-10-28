@@ -6,7 +6,7 @@ from file_handler import FileHandler
 
 class OcrPreProcessor:
     VALID_FILE_EXTENSIONS = ('.xlsx',)
-    OCR_FOLDER_PATH = "/home/ubuntu/mobileForcesPublic/ocr"
+    OCR_FOLDER_PATH = "/home/ubuntu/mobileForcesPublic/ocr/"
     OCR_FOLDER_ID = None
 
     def __init__(self, google_drive, ocr_folder_id: str):
