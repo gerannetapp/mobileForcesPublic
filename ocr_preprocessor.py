@@ -35,7 +35,13 @@ class OcrPreProcessor:
             for title, new_file in new_added_files.items():
                 logging.info(f"Execute logic on: {title}, {new_file['id']}")
                 ocr_df = self._generate_df_from_ocr_file(self.OCR_FOLDER_PATH, title, new_file['id'])
-                os.rename(self.OCR_FOLDER_PATH + title, self.ARCHIVE_FOLDER_PATH + title)
+                previous_parents = ",".join(new_file.get('parents'))
+                file = self.google_drive.files().update(
+                    fileId=new_file['id'],
+                    addParents="1MpRnelL2E8Fmxh3Kctp9sfc8p608u2-p",
+                    removeParents=previous_parents,
+                    fields='id, parents'
+                ).execute()
                 preprocess_df = self.preprocess_file(ocr_df)
                 # TODO: upload preprocess_df as xls to the relavant folder
                 print(preprocess_df)
